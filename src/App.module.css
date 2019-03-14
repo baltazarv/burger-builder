@@ -1,0 +1,16 @@
+.App {
+  text-align: center;
+}
+
+.App li {
+  text-align: left;
+}
+
+.link {
+  color: #61dafb;
+}
+
+:global(.capitalized) {
+	text-transform: capitalize;
+}
+
