@@ -10,7 +10,7 @@ const Order = props => {
 					{ing[0]} ({ing[1]})
 				</span>
 			))}
-			<p>Price: <strong>${Number.parseFloat(props.price).toFixed(2)}</strong></p>
+			<p>Price: <strong>${props.totalPrice}</strong></p>
 		</div>
 	);
 };

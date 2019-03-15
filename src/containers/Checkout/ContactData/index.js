@@ -4,8 +4,9 @@ import Spinner from '../../../components/ui/Spinner';
 import styles from './contact-data.module.css';
 import axios from '../../../axios-order';
 import Input from '../../../components/ui/Input';
+import { connect } from 'react-redux';
 
-export default class ContactData extends Component {
+class ContactData extends Component {
 	// validationErrors = {
 	// 	requiredError: 'Please enter a value.'
 	// }
@@ -114,10 +115,9 @@ export default class ContactData extends Component {
 			return obj;
 		}, {})
 
-		// should use prices stored on server to calc totalPrice
 		const order = {
 			ingredients: this.props.ingredients,
-			price: this.props.price,
+			totalPrice: this.props.totalPrice,
 			orderData
 		}
 		axios.post('/orders.json', order)
@@ -179,3 +179,12 @@ export default class ContactData extends Component {
 		)
 	}
 }
+
+const mapStateToProps = state => {
+	return {
+		ingredients: state.ingredients,
+		totalPrice: state.totalPrice
+	}
+}
+
+export default connect(mapStateToProps)(ContactData);
