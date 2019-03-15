@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import CheckoutSummary from "../../components/Order/CheckoutSummary";
 import { Route } from "react-router-dom";
 import ContactData from "./ContactData";
-import * as actionTypes from '../../store/actions';
+import * as burgerActions from '../../store/actions/index';
 import { connect } from 'react-redux';
 
 class Checkout extends Component {
@@ -48,7 +48,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
 	return {
-		addIngredients: ingredients => dispatch({ type: actionTypes.ADD_INGREDIENTS, ingredients })
+		addIngredients: ingredients => dispatch(burgerActions.addIngredients(ingredients))
 	}
 };
 

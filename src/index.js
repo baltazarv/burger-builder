@@ -3,12 +3,23 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import { BrowserRouter } from 'react-router-dom';
-import { createStore } from 'redux';
+import { createStore, applyMiddleware, compose } from 'redux';
 import { Provider } from 'react-redux';
-import reducer from './store/reducer';
+import reducer from './store/reducers/burgerBuilder';
 import * as serviceWorker from './serviceWorker';
 
-const store = createStore(reducer);
+const logger = store => {
+  return next => {
+    return action => {
+      console.log('[Middlewear] logger, action=', action, 'store=', store.getState())
+			return next(action);
+		}
+	}
+}
+
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+
+const store = createStore(reducer, composeEnhancers(applyMiddleware(logger)));
 
 const app = (
 	<Provider store={store}>
