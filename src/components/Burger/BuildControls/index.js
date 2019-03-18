@@ -31,7 +31,7 @@ const buildControls = props => (
 
 const mapStateToProps = state => {
 	return {
-		totalPrice: state.totalPrice
+		totalPrice: state.burgerBuilder.totalPrice
 	}
 }
 
