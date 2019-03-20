@@ -15,7 +15,7 @@ const sideDrawer = props => {
 			<div className={attachedStyles.join(' ')}>
 				<img src={logo} className={styles.logo} alt="logo" />
 				<nav>
-					<Menu />
+					<Menu isAuth={props.isAuth} />
 				</nav>
 			</div>
 		</>

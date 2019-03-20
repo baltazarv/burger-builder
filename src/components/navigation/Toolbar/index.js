@@ -12,7 +12,7 @@ const toolbar = props => {
 				<img src={logo} className={styles.logo} alt="logo" />
 			</div>
 			<nav className={styles.DesktopOnly}>
-				<Menu />
+				<Menu isAuth={props.isAuth} />
 			</nav>
 		</header>
 	);

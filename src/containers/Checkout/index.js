@@ -8,12 +8,12 @@ import { connect } from 'react-redux';
 class Checkout extends Component {
 
 	componentWillMount = () => {
-		const query = new URLSearchParams(this.props.location.search);
-		const ingredients = {};
-		for (let param of query.entries()) {
-			ingredients[param[0]] = +param[1];
-		}
-		this.props.setIngredients(ingredients);
+		// const query = new URLSearchParams(this.props.location.search);
+		// const ingredients = {};
+		// for (let param of query.entries()) {
+		// 	ingredients[param[0]] = +param[1];
+		// }
+		// this.props.setIngredients(ingredients);
 		this.props.onInitPurchase();
 	}
 
@@ -58,7 +58,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
 	return {
-		setIngredients: ingredients => dispatch(actions.setIngredients(ingredients)),
+		// setIngredients: ingredients => dispatch(actions.setIngredients(ingredients)),
 		onInitPurchase: () => dispatch(actions.purchaseInit())
 	};
 };

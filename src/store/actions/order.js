@@ -3,12 +3,11 @@ import axios from '../../axios-order';
 
 // purchase
 
-export const purchaseBurger = order => {
+export const purchaseBurger = (order, authToken) => {
 	return dispatch => {
 		dispatch(purchaseBurgerStart());
-		axios.post('/orders.json', order)
+		axios.post(`/orders.json?auth=${authToken}`, order)
 			.then(resp => {
-				console.log(resp.data)
 				dispatch(purchaseOrderSuccess(resp.data.name, order));
 			})
 			.catch(err => {
@@ -46,10 +45,10 @@ export const purchaseOrderFailed = error => {
 
 // get order info
 
-export const fetchOrders = () => {
+export const fetchOrders = idToken => {
 	return dispatch => {
 		dispatch(fetchOrdersStart());
-		axios.get('/orders.json')
+		axios.get(`/orders.json?auth=${idToken}`)
 			.then(resp => {
 				const orders = Object.entries(resp.data).map(order => {
 					return {...order[1], id: order[0]}
@@ -70,6 +69,7 @@ export const fetchOrdersSuccess = orders => {
 };
 
 export const fetchOrdersFail = error => {
+	console.log('fetchOrdersFail')
 	return {
 		type: actionTypes.FETCH_ORDERS_FAILED,
 		error

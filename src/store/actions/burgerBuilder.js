@@ -44,9 +44,9 @@ export const removeIngredient = ingredient => {
 	};
 };
 
-export const setIngredients = ingredients => {
-	return {
-		type: actionTypes.SET_INGREDIENTS,
-		ingredients
-	};
-}
+// export const setIngredients = ingredients => {
+// 	return {
+// 		type: actionTypes.SET_INGREDIENTS,
+// 		ingredients
+// 	};
+// }

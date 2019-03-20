@@ -15,7 +15,7 @@ class BurgerBuilder extends Component {
 	}
 
 	componentDidMount = () => {
-		this.props.getIngredients();
+		if (!this.props.buildingBurger) this.props.getIngredients();
 	}
 
 	updatePurchaseState(ingredients) {
@@ -30,7 +30,12 @@ class BurgerBuilder extends Component {
 	}
 
 	purchaseHandler = () => {
-		this.setState({ purchasing: true })
+		if (this.props.isAuth) {
+			this.setState({ purchasing: true })
+		} else {
+			this.props.onSetAuthRedirectPath('/checkout');
+			this.props.history.push('/auth');
+		}
 	}
 
 	purchaseCancelHandler = () => {
@@ -38,16 +43,17 @@ class BurgerBuilder extends Component {
 	}
 
 	purchaseContinueHandler = () => {
-		const queryParams = [];
-		for (let i in this.props.ingredients) {
-			queryParams.push(encodeURIComponent(i) + '=' + encodeURIComponent(this.props.ingredients[i]))
-		}
-		const queryString = queryParams.join('&');
+		// const queryParams = [];
+		// for (let i in this.props.ingredients) {
+		// 	queryParams.push(encodeURIComponent(i) + '=' + encodeURIComponent(this.props.ingredients[i]))
+		// }
+		// const queryString = queryParams.join('&');
 		this.props.onInitPurchase();
-		this.props.history.push({
-			pathname: '/checkout',
-			search: '?' + queryString
-		});
+		// this.props.history.push({
+		// 	pathname: '/checkout',
+		// 	search: '?' + queryString
+		// });
+		this.props.history.push('/checkout');
 	}
 
 	render() {
@@ -71,6 +77,7 @@ class BurgerBuilder extends Component {
 						purchasable={this.updatePurchaseState(this.props.ingredients)}
 						makeOrder={this.purchaseHandler}
 						totalPrice={this.props.totalPrice}
+						isAuth={this.props.isAuth}
 					/>
 				</>
 			);
@@ -100,7 +107,9 @@ const mapStateToProps = state => {
 	return {
 		ingredients: state.burgerBuilder.ingredients,
 		totalPrice: state.burgerBuilder.totalPrice,
-		error: state.burgerBuilder.error
+		error: state.burgerBuilder.error,
+		isAuth: state.auth.idToken !== null,
+		buildingBurger: state.burgerBuilder.buildingBurger
 	}
 }
 
@@ -109,7 +118,8 @@ const mapDispatchToProps = dispatch => {
 		addIngredient: ingredient => dispatch(actions.addIngredient(ingredient)),
 		removeIngredient: ingredient => dispatch(actions.removeIngredient(ingredient)),
 		getIngredients: () => dispatch(actions.getIngredients()),
-		onInitPurchase: () => dispatch(actions.purchaseInit())
+		onInitPurchase: () => dispatch(actions.purchaseInit()),
+		onSetAuthRedirectPath: path => dispatch(actions.setAuthRedirectPath(path))
 	}
 }
 
