@@ -45,10 +45,11 @@ export const purchaseOrderFailed = error => {
 
 // get order info
 
-export const fetchOrders = idToken => {
+export const fetchOrders = (idToken, userId) => {
 	return dispatch => {
 		dispatch(fetchOrdersStart());
-		axios.get(`/orders.json?auth=${idToken}`)
+		const queryParams = `?auth=${idToken}&orderBy="userId"&equalTo="${userId}"`
+		axios.get(`/orders.json${queryParams}`)
 			.then(resp => {
 				const orders = Object.entries(resp.data).map(order => {
 					return {...order[1], id: order[0]}
@@ -69,7 +70,6 @@ export const fetchOrdersSuccess = orders => {
 };
 
 export const fetchOrdersFail = error => {
-	console.log('fetchOrdersFail')
 	return {
 		type: actionTypes.FETCH_ORDERS_FAILED,
 		error
