@@ -12,7 +12,9 @@ const sideDrawer = props => {
 	return (
 		<>
 			<Backdrop show={props.open} clicked={props.close} />
-			<div className={attachedStyles.join(' ')}>
+			<div
+				className={attachedStyles.join(' ')}
+				onClick={props.close}>
 				<img src={logo} className={styles.logo} alt="logo" />
 				<nav>
 					<Menu isAuth={props.isAuth} />
